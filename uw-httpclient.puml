@@ -1,0 +1,50 @@
+
+() "HttpInterface"
+
+
+
+HttpInterface ..> [JsonInterfaceHelper]
+HttpInterface ..> [XmlInterfaceHelper]
+
+JsonInterfaceHelper --> AbstractHttpInterface
+XmlInterfaceHelper --> AbstractHttpInterface
+
+@startuml
+class HttpInterface {
+    {abstract} ObjectMapper objectMapper()
+    {abstract} HttpHelper httpHelper()
+    {abstract} HttpHelper httpHelper(HttpConfig httpConfig)
+    {abstract} HttpMessageCallBack callBack()
+
+    <T> ResponseWrapper<T> requestForEntity(...) throws InterfaceException
+    <T> T requestForObject(...) throws InterfaceException
+}
+
+class AbstractHttpInterface {
+    ...
+    <T> T handleResponse(HttpConfig httpConfig, final Request request, final ResponseExtractor<T> extractor)
+}
+
+class JsonInterfaceHelper {
+    ...
+    JsonInterfaceHelper(final HttpConfig httpConfig,final ObjectMapper jsonConverter,final HttpMessageCallBack callBack)
+}
+
+class XmlInterfaceHelper {
+    ...
+    XmlInterfaceHelper(final HttpConfig httpConfig,final ObjectMapper xmlConverter,final HttpMessageCallBack callBack)
+}
+
+class HttpHelper{
+    ...
+    Response execute(Request request) throws IOException
+}
+
+HttpInterface <|-- AbstractHttpInterface
+
+AbstractHttpInterface <|.. JsonInterfaceHelper
+AbstractHttpInterface <|.. XmlInterfaceHelper
+
+HttpHelper <.down. JsonInterfaceHelper
+HttpHelper <.down. XmlInterfaceHelper
+@enduml
