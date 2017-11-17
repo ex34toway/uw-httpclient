@@ -1,6 +1,7 @@
 #interface-utils
 
 #### 更新日志
+    0.4.4 转换失败时输出response内容
     0.4.3 增加对TypeReference形式的方法支持,方便支持返回集合类型的接口。
     0.4.1 XmlInterfaceHelper默认构造参数写错Bug。
     0.4.0 主要增加了传入一个VO作为POST方法请求体[内部使用ObjectMapper进行转换操作]的一些方法。
