@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.Request;
 import okhttp3.Response;
 import uw.httpclient.http.exception.MapperException;
+import uw.httpclient.util.NoReturnClass;
 
 import java.io.IOException;
 
@@ -35,6 +36,8 @@ public class EntityExtractor<T> implements ResponseExtractor<ResponseWrapper<T>>
         String resp = response.body().string();
         if(callBack != null){
             resp = callBack.doConvert(resp);
+            if (responseType == NoReturnClass.class && typeRef == null)
+                return null;
         }
         if(responseType == null)
             return new ResponseWrapper<>(request,response,objectMapper.parse(resp,typeRef),resp);
