@@ -1458,19 +1458,13 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 			try {
 				return extractor.extractData(request, response,callBack());
 			} catch (IOException t) {
-				throw new InterfaceException("返回结果失败", t);
+				throw new InterfaceException("返回结果失败: ", t);
 			} catch (MapperException t) {
 				throw new InterfaceException(String.format("转换失败: %s", t.getMessage()), t);
 			} catch (Throwable t) {
 				throw new InterfaceException(t);
 			}
 		}
-		StringBuilder errorInfo = new StringBuilder(300);
-		errorInfo.append("HTTP CODE:").append(response.code()).append(", BODY:");
-		try {
-			errorInfo.append(response.body().string());
-		} catch (Throwable t) {
-		}
-		throw new InterfaceException(errorInfo.toString());
+        throw new InterfaceException("HTTP CODE: "+response.code());
 	}
 }

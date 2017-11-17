@@ -42,7 +42,7 @@ public interface ObjectMapper {
             try {
                 return (T)objectMapper.readValue(content,classType);
             } catch (Exception e) {
-                throw new MapperException(e.getMessage(),e);
+                throw new MapperException(e.getMessage() + ",data: " + content,e);
             }
         }
 
@@ -52,7 +52,7 @@ public interface ObjectMapper {
             try {
                 return (T)objectMapper.readValue(content,typeRef);
             } catch (Exception e) {
-                throw new MapperException(e.getMessage(),e);
+                throw new MapperException(e.getMessage() + ",data: " + content,e);
             }
         }
 
@@ -73,7 +73,7 @@ public interface ObjectMapper {
             try {
                 return (T)xmlMapper.readValue(content,classType);
             } catch (Exception e) {
-                throw new MapperException(e.getMessage(),e);
+                throw new MapperException(e.getMessage() + ",data: " + content,e);
             }
         }
 
@@ -83,7 +83,7 @@ public interface ObjectMapper {
             try {
                 return (T)xmlMapper.readValue(content,typeRef);
             } catch (Exception e) {
-                throw new MapperException(e.getMessage(),e);
+                throw new MapperException(e.getMessage() + ",data: " + content,e);
             }
         }
 
