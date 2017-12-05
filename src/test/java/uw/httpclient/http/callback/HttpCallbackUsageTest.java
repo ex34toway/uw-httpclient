@@ -2,8 +2,6 @@ package uw.httpclient.http.callback;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uw.httpclient.http.*;
 import uw.httpclient.http.exception.InterfaceException;
 import uw.httpclient.http.exception.MapperException;
@@ -17,12 +15,10 @@ import uw.httpclient.util.NoReturnClass;
  */
 public class HttpCallbackUsageTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(HttpCallbackUsageTest.class);
-
     /**
      * 正常返回Vo
      */
-    public class ResponseResult {
+    public static class ResponseResult {
         /**
          * biz id
          */
@@ -138,7 +134,6 @@ public class HttpCallbackUsageTest {
                 this.errorVo = ObjectMapper.DEFAULT_JSON_MAPPER.parse(content,ErrorVo.class);
             } catch (MapperException e) {
                 // 判定失败
-                logger.error(e.getMessage(),e);
                 return content;
             }
 
