@@ -26,9 +26,9 @@
 ##### 添加maven dependency
 ```xml
 <dependency>
-    <groupId>com.zwy.utils</groupId>
-    <artifactId>interface-utils</artifactId>
-    <version>${project.version}</version>
+    <groupId>com.umtone</groupId>
+    <artifactId>uw-httpclient</artifactId>
+    <version>${version}</version>
 </dependency>
 ```
 ##### 使用例程
