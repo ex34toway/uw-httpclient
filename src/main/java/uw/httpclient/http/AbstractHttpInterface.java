@@ -1465,6 +1465,11 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 				throw new InterfaceException(t);
 			}
 		}
-        throw new InterfaceException("HTTP CODE: "+response.code());
+		String resp = "";
+		try {
+		    resp = response.body().string();
+        } catch (IOException e){
+        }
+        throw new InterfaceException("HTTP CODE: "+response.code()+",RESPONSE: "+resp);
 	}
 }
