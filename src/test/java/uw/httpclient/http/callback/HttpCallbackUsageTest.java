@@ -3,8 +3,8 @@ package uw.httpclient.http.callback;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.Test;
 import uw.httpclient.http.*;
-import uw.httpclient.http.exception.InterfaceException;
-import uw.httpclient.http.exception.MapperException;
+import uw.task.exception.TaskPartnerException;
+import uw.task.exception.MapperException;
 import uw.httpclient.json.JsonInterfaceHelper;
 import uw.httpclient.util.NoReturnClass;
 
@@ -146,10 +146,10 @@ public class HttpCallbackUsageTest {
      * 一个下单的接口调用
      * 发生错误与下单正常返回不同的Vo的处理方法
      * NoReturnClass.class 用来标识 uw-httpclient是否还需要parse
-     * @throws InterfaceException
+     * @throws TaskPartnerException
      */
     @Test
-    public void testCallback() throws InterfaceException {
+    public void testCallback() throws TaskPartnerException {
         ErrorCallBack errorCallBack = new ErrorCallBack();
         HttpInterface httpInterface = new JsonInterfaceHelper(errorCallBack);
         TypeReference<ResponseResult> typeRef = new TypeReference<ResponseResult>(){};

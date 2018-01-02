@@ -1,7 +1,7 @@
 package uw.httpclient.http;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import uw.httpclient.http.exception.MapperException;
+import uw.task.exception.MapperException;
 
 /**
  * 对象Mapper

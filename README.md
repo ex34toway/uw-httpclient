@@ -1,6 +1,7 @@
 # interface-utils
 
 #### 更新日志
+    0.4.8 增加合并uw-task异常处理,强化task接口的异常分类处理
     0.4.7 增加Http Status code 不在[200,300)之间的请求同时抛出响应码和响应内容
     0.4.6 去掉uw-task引用
     0.4.5 主要对一些有多值[能解析不同的Vo]的接口添加支持,并通过NoReturnClass.class标记是否需要uw-httpclient处理
