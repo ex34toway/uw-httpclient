@@ -1237,6 +1237,26 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * POST
      * @param url
      * @param headers
+     * @param responseType
+     * @param content
+     * @param mediaType
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    public <T> ResponseWrapper<T> postForEntity(String url, Map<String,String> headers, Class<T> responseType,
+                                         Object content,MediaType mediaType) throws TaskPartnerException
+    {
+        Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, objectMapper().toString(content)))
+                .headers(Headers.of(headers)).build();
+        ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), responseType);
+        return handleResponse(null, request, extractor);
+    }
+
+    /**
+     * POST
+     * @param url
+     * @param headers
      * @param typeRef
      * @param content
      * @param mediaType

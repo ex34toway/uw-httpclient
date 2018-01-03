@@ -899,6 +899,20 @@ public interface HttpInterface {
      * POST
      * @param url
      * @param headers
+     * @param responseType
+     * @param content
+     * @param mediaType
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> ResponseWrapper<T> postForEntity(String url, Map<String,String> headers, Class<T> responseType,
+                        Object content,MediaType mediaType) throws TaskPartnerException;
+
+    /**
+     * POST
+     * @param url
+     * @param headers
      * @param typeRef
      * @param content
      * @param mediaType
