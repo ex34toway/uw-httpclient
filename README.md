@@ -1,6 +1,7 @@
 # interface-utils
 
 #### 更新日志
+    0.5.0 添加xml MediaType声明
     0.4.9 缺失接口添加
     0.4.8 增加合并uw-task异常处理,强化task接口的异常分类处理
     0.4.7 增加Http Status code 不在[200,300)之间的请求同时抛出响应码和响应内容
