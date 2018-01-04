@@ -123,7 +123,7 @@ public class HttpCallbackUsageTest {
         }
 
         @Override
-        public String doConvert(String content) {
+        public String doConvert(String content) throws MapperException {
             try {
                 // 进行业务处理
                 // biz logic

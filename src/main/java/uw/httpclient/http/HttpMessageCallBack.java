@@ -1,5 +1,7 @@
 package uw.httpclient.http;
 
+import uw.task.exception.MapperException;
+
 /**
  * Http接口调用成功回调
  * @author liliang
@@ -12,5 +14,5 @@ public interface HttpMessageCallBack {
      * @param content
      * @return
      */
-    String doConvert(String content);
+    String doConvert(String content) throws MapperException ;
 }
