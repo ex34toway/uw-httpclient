@@ -1468,7 +1468,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 		String resp = "";
 		try {
 		    resp = response.body().string();
-        } catch (IOException e){
+			} catch (IOException e){
         }
         throw new TaskPartnerException("HTTP CODE: "+response.code()+",RESPONSE: "+resp);
 	}

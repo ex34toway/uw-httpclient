@@ -69,4 +69,5 @@ public class StringUriTemplateUtil {
         strSubstitutor.setVariableResolver(vaargsLookUp(uriVariables));
         return strSubstitutor.replace(url);
     }
+
 }
