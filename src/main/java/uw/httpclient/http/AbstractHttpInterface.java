@@ -734,6 +734,47 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 		return handleResponse(null, request, extractor);
 	}
 
+
+    /**
+     * POST
+     * @param url
+     * @param responseType
+     * @param formParam
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    public <T> ResponseWrapper<T> postForEntity(String url, Class<T> responseType, Map<String,String> formParam) throws TaskPartnerException
+    {
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+        for (Map.Entry<String,String> param : formParam.entrySet()){
+            formBodyBuilder.add(param.getKey(),param.getValue());
+        }
+        Request request = new Request.Builder().url(url).post(formBodyBuilder.build()).build();
+        ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), responseType);
+        return handleResponse(null, request, extractor);
+    }
+
+    /**
+     * POST
+     * @param url
+     * @param responseType
+     * @param formParam
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    public <T> T postForObject(String url, Class<T> responseType, Map<String,String> formParam) throws TaskPartnerException
+    {
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+        for (Map.Entry<String,String> param : formParam.entrySet()){
+            formBodyBuilder.add(param.getKey(),param.getValue());
+        }
+        Request request = new Request.Builder().url(url).post(formBodyBuilder.build()).build();
+        ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
+        return handleResponse(null, request, extractor);
+    }
+
     /**
      * POST
      * @param url
@@ -745,6 +786,46 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      */
     public <T> T postForObject(String url, TypeReference<T> typeRef, RequestBody requestBody) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(requestBody).build();
+        ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
+        return handleResponse(null, request, extractor);
+    }
+
+    /**
+     * POST
+     * @param url
+     * @param typeRef
+     * @param formParam
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    public <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef, Map<String,String> formParam) throws TaskPartnerException
+    {
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+        for (Map.Entry<String,String> param : formParam.entrySet()){
+            formBodyBuilder.add(param.getKey(),param.getValue());
+        }
+        Request request = new Request.Builder().url(url).post(formBodyBuilder.build()).build();
+        ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), typeRef);
+        return handleResponse(null, request, extractor);
+    }
+
+    /**
+     * POST
+     * @param url
+     * @param typeRef
+     * @param formParam
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    public <T> T postForObject(String url, TypeReference<T> typeRef, Map<String,String> formParam) throws TaskPartnerException
+    {
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+        for (Map.Entry<String,String> param : formParam.entrySet()){
+            formBodyBuilder.add(param.getKey(),param.getValue());
+        }
+        Request request = new Request.Builder().url(url).post(formBodyBuilder.build()).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
         return handleResponse(null, request, extractor);
     }

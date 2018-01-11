@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.umtone</groupId>
     <artifactId>uw-httpclient</artifactId>
-    <version>0.5.1</version>
+    <version>0.5.2</version>
 
     <name>interface-utils</name>
     <description>Http请求接口基础工具包</description>

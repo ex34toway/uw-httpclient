@@ -1,6 +1,9 @@
 # interface-utils
 
 #### 更新日志
+    0.5.2 
+        a. 支持String类型返回,解决部分接口返回单个值类问题
+        b. 简化大量接口Form提交形式的参数
     0.5.1 HttpMessageCallBack回调接口添加异常声明
     0.5.0 添加xml MediaType声明
     0.4.9 缺失接口添加

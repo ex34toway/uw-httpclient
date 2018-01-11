@@ -515,17 +515,6 @@ public interface HttpInterface {
     /**
      * POST
      * @param url
-     * @param typeRef
-     * @param requestBody
-     * @param <T>
-     * @return
-     * @throws TaskPartnerException
-     */
-    <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef, RequestBody requestBody) throws TaskPartnerException;
-
-    /**
-     * POST
-     * @param url
      * @param responseType
      * @param requestBody
      * @param <T>
@@ -537,6 +526,39 @@ public interface HttpInterface {
     /**
      * POST
      * @param url
+     * @param responseType
+     * @param formParam
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> ResponseWrapper<T> postForEntity(String url, Class<T> responseType, Map<String,String> formParam) throws TaskPartnerException;
+
+    /**
+     * POST
+     * @param url
+     * @param responseType
+     * @param formParam
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T postForObject(String url, Class<T> responseType, Map<String,String> formParam) throws TaskPartnerException;
+
+    /**
+     * POST
+     * @param url
+     * @param typeRef
+     * @param requestBody
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef, RequestBody requestBody) throws TaskPartnerException;
+
+    /**
+     * POST
+     * @param url
      * @param typeRef
      * @param requestBody
      * @param <T>
@@ -544,6 +566,28 @@ public interface HttpInterface {
      * @throws TaskPartnerException
      */
     <T> T postForObject(String url, TypeReference<T> typeRef, RequestBody requestBody) throws TaskPartnerException;
+
+    /**
+     * POST
+     * @param url
+     * @param typeRef
+     * @param formParam
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef, Map<String,String> formParam) throws TaskPartnerException;
+
+    /**
+     * POST
+     * @param url
+     * @param typeRef
+     * @param formParam
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T postForObject(String url, TypeReference<T> typeRef, Map<String,String> formParam) throws TaskPartnerException;
 
     /**
      * POST

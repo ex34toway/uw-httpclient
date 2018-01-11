@@ -32,6 +32,7 @@ public class ObjectExtractor<T> implements ResponseExtractor<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T extractData(Request request,Response response,HttpMessageCallBack callBack) throws IOException, MapperException {
         String resp = response.body().string();
         if(callBack != null){
@@ -41,6 +42,8 @@ public class ObjectExtractor<T> implements ResponseExtractor<T> {
         }
         if(responseType == null)
             return (T)objectMapper.parse(resp,typeRef);
+        if(responseType == String.class)
+            return (T)resp;
         return (T)objectMapper.parse(resp,responseType);
     }
 }

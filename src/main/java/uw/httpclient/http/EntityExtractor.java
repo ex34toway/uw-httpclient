@@ -32,6 +32,7 @@ public class EntityExtractor<T> implements ResponseExtractor<ResponseWrapper<T>>
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ResponseWrapper<T> extractData(Request request,Response response,HttpMessageCallBack callBack) throws IOException, MapperException {
         String resp = response.body().string();
         if(callBack != null){
@@ -41,6 +42,8 @@ public class EntityExtractor<T> implements ResponseExtractor<ResponseWrapper<T>>
         }
         if(responseType == null)
             return new ResponseWrapper<>(request,response,objectMapper.parse(resp,typeRef),resp);
+        if(responseType == String.class)
+            return new ResponseWrapper<>(request,response,null,resp);
         return new ResponseWrapper<>(request,response,objectMapper.parse(resp,responseType),resp);
     }
 }

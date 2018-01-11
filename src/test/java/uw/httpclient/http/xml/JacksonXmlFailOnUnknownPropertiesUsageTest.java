@@ -3,15 +3,21 @@ package uw.httpclient.http.xml;
 import static org.junit.Assert.*;
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import com.google.common.collect.Maps;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import uw.httpclient.http.HttpInterface;
 import uw.httpclient.http.ObjectMapper;
+import uw.httpclient.http.ResponseWrapper;
 import uw.httpclient.http.xml.vo.LvmamaPriceInfoVoErrorVo;
 import uw.httpclient.http.xml.vo.SessionVo;
+import uw.httpclient.json.JsonInterfaceHelper;
 import uw.task.exception.MapperException;
+import uw.task.exception.TaskPartnerException;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 解析Xml中遇到的问题
@@ -79,5 +85,24 @@ public class JacksonXmlFailOnUnknownPropertiesUsageTest {
                 "    <Error>DateVisit parameter is invalid.</Error>\n" +
                 "</Response>";
         SessionVo sessionVo = ObjectMapper.DEFAULT_XML_MAPPER.parse(content, SessionVo.class);
+    }
+
+    @Test
+    public void testGet() throws TaskPartnerException {
+        HttpInterface httpInterface = new JsonInterfaceHelper();
+        String resp =
+                httpInterface.getForObject("http://www.zowoyoo.com",String.class);
+        System.out.println(resp);
+    }
+
+    @Test
+    public void testPostForm() throws TaskPartnerException {
+        HttpInterface httpInterface = new JsonInterfaceHelper();
+        Map<String,String> loginParam = Maps.newHashMap();
+        loginParam.put("username","test");
+        loginParam.put("password","test");
+        ResponseWrapper<String> responseWrapper =
+                httpInterface.postForEntity("http://localhost:8087/cookie/test",String.class,loginParam);
+        System.out.println(responseWrapper.getResponseBody());
     }
 }
