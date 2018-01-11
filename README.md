@@ -1,4 +1,4 @@
-# interface-utils
+# uw-httpclient
 
 #### 更新日志
     0.5.2 
@@ -82,5 +82,5 @@ Socket句柄的占用而带来的各种问题。
   
   Q: ObjectMapper是否能处理不加注解的Vo类？
   
-  A: 目前interface-utils采用jackson作为json和xml的序列化和反序列化库,没有添加jackson支持的注解能否转换成功取决于jackson对json或者xml处理的
+  A: 目前uw-httpclient采用jackson作为json和xml的序列化和反序列化库,没有添加jackson支持的注解能否转换成功取决于jackson对json或者xml处理的
 默认的规则,建议使用json-xml-codegen maven plugin生成相关的Java Vo实体类。
