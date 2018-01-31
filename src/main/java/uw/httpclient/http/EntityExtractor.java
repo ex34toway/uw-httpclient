@@ -10,10 +10,11 @@ import java.io.IOException;
 
 /**
  * 实体Wrapper请求结果抓取器
+ *
  * @author liliang
  * @since 2017/9/25
  */
-public class EntityExtractor<T> implements ResponseExtractor<ResponseWrapper<T>>{
+public class EntityExtractor<T> implements ResponseExtractor<ResponseWrapper<T>> {
 
     private ObjectMapper objectMapper;
 
@@ -33,17 +34,17 @@ public class EntityExtractor<T> implements ResponseExtractor<ResponseWrapper<T>>
 
     @Override
     @SuppressWarnings("unchecked")
-    public ResponseWrapper<T> extractData(Request request,Response response,HttpMessageCallBack callBack) throws IOException, MapperException {
+    public ResponseWrapper<T> extractData(Request request, Response response, HttpMessageCallBack callBack) throws IOException, MapperException {
         String resp = response.body().string();
-        if(callBack != null){
+        if (callBack != null) {
             resp = callBack.doConvert(resp);
             if (responseType == NoReturnClass.class && typeRef == null)
                 return null;
         }
-        if(responseType == null)
-            return new ResponseWrapper<>(request,response,objectMapper.parse(resp,typeRef),resp);
-        if(responseType == String.class)
-            return new ResponseWrapper<>(request,response,null,resp);
-        return new ResponseWrapper<>(request,response,objectMapper.parse(resp,responseType),resp);
+        if (responseType == null)
+            return new ResponseWrapper<>(request, response, objectMapper.parse(resp, typeRef), resp);
+        if (responseType == String.class)
+            return new ResponseWrapper<>(request, response, (T) resp, resp);
+        return new ResponseWrapper<>(request, response, objectMapper.parse(resp, responseType), resp);
     }
 }
