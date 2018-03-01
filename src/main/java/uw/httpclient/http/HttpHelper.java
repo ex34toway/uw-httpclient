@@ -23,19 +23,16 @@ public class HttpHelper {
 
 	public final static MediaType XML_UTF8 = MediaType.parse("application/xml; charset=utf-8");
 
-	private static final OkHttpClient uwOkHttpClient = new OkHttpClient.Builder().build();
+	private static final OkHttpClient globalOkHttpClient = new OkHttpClient.Builder().build();
 
 	private final OkHttpClient okHttpClient;
 
-	private final boolean defaultClient;
-
 	public HttpHelper() {
-		okHttpClient = uwOkHttpClient;
-		this.defaultClient = true;
+		okHttpClient = globalOkHttpClient;
 	}
 
 	public final OkHttpClient okHttpClient() {
-		return uwOkHttpClient;
+		return okHttpClient;
 	}
 
 	/**
@@ -44,11 +41,10 @@ public class HttpHelper {
 	 * @return
 	 */
 	public HttpHelper(HttpConfig httpConfig) {
-		this.okHttpClient = uwOkHttpClient.newBuilder()
+		this.okHttpClient = globalOkHttpClient.newBuilder()
 				.connectTimeout(httpConfig.connectTimeout(), TimeUnit.MILLISECONDS)
 				.readTimeout(httpConfig.readTimeout(), TimeUnit.MILLISECONDS)
 				.writeTimeout(httpConfig.writeTimeout(), TimeUnit.MILLISECONDS).build();
-		this.defaultClient = false;
 	}
 
 	/**
