@@ -7,6 +7,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import uw.httpclient.util.LogInterceptor;
 
 /**
  * Http请求工具
@@ -25,10 +26,16 @@ public class HttpHelper {
 
 	private static final OkHttpClient globalOkHttpClient = new OkHttpClient.Builder().build();
 
+	private static final OkHttpClient testClient = new OkHttpClient.Builder().addInterceptor(new LogInterceptor()).build();
+
 	private final OkHttpClient okHttpClient;
 
 	public HttpHelper() {
 		okHttpClient = globalOkHttpClient;
+	}
+
+	public HttpHelper(final String test) {
+		okHttpClient = testClient;
 	}
 
 	public final OkHttpClient okHttpClient() {

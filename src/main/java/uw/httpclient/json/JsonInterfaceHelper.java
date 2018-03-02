@@ -29,6 +29,12 @@ public class JsonInterfaceHelper extends AbstractHttpInterface {
         this.callBack = null;
     }
 
+    public JsonInterfaceHelper(final String test){
+        this.httpHelper = new HttpHelper(test);
+        this.jsonConverter = ObjectMapper.DEFAULT_JSON_MAPPER;
+        this.callBack = null;
+    }
+
     public JsonInterfaceHelper(final HttpMessageCallBack callBack){
         this(ObjectMapper.DEFAULT_JSON_MAPPER,callBack);
     }
