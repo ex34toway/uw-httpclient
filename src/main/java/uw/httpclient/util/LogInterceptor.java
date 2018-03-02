@@ -28,6 +28,7 @@ public class LogInterceptor implements Interceptor {
         log.info(String.format("接收响应: %s %n实际返回json : %s",
                 response.request().url(),
                 responseBody.string()));
+        responseBody.close();
         return response;
     }
 }
