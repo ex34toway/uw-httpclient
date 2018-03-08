@@ -21,11 +21,16 @@ public class LogInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        log.info(String.format("发送请求 : %s ,headers : %s",
-                request.url(), request.headers()));
+//        log.info(String.format("发送请求 : %s ,headers : %s",
+//                request.toString(), request.headers()));
         Response response = chain.proceed(request);
         ResponseBody responseBody = response.peekBody(1024*1024);
-        log.info(String.format("接收响应: %s %n实际返回json : %s",
+        log.info(
+        "contentLength is " + request.body().contentLength() + ",contentType is : " + request.body().contentType().toString());
+        log.info(String.format("发送请求 : %s ,headers : %s",
+                request.toString(), request.headers()));
+        log.info(String.format("contentType: %s %n接收响应: %s %n实际返回json : %s",
+                responseBody.contentType().toString(),
                 response.request().url(),
                 responseBody.string()));
         responseBody.close();
