@@ -1,6 +1,7 @@
 # uw-httpclient
 
 #### 更新日志
+    0.5.4 添加拦截器配置支持
     0.5.3 统一配置DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES属性
     0.5.2 
         a. 支持String类型返回,解决部分接口返回单个值类问题

@@ -31,20 +31,21 @@ public class HttpHelper {
 		okHttpClient = globalOkHttpClient;
 	}
 
-	public final OkHttpClient okHttpClient() {
-		return okHttpClient;
-	}
-
 	/**
 	 * 自定义OkHttpClient配置
 	 * 
 	 * @return
 	 */
-	public HttpHelper(HttpConfig httpConfig) {
-		this.okHttpClient = globalOkHttpClient.newBuilder()
+	public HttpHelper(final HttpConfig httpConfig) {
+		OkHttpClient.Builder okHttpClientBuilder = globalOkHttpClient.newBuilder()
 				.connectTimeout(httpConfig.connectTimeout(), TimeUnit.MILLISECONDS)
 				.readTimeout(httpConfig.readTimeout(), TimeUnit.MILLISECONDS)
-				.writeTimeout(httpConfig.writeTimeout(), TimeUnit.MILLISECONDS).build();
+				.writeTimeout(httpConfig.writeTimeout(), TimeUnit.MILLISECONDS);
+		if(httpConfig.applicationInterceptor() != null)
+            okHttpClientBuilder.addInterceptor(httpConfig.applicationInterceptor());
+        if(httpConfig.networkInterceptor() != null)
+            okHttpClientBuilder.addNetworkInterceptor(httpConfig.networkInterceptor());
+        this.okHttpClient = okHttpClientBuilder.build();
 	}
 
 	/**
