@@ -12,20 +12,26 @@ import uw.task.exception.MapperException;
  */
 public class XMLObjectMapperImpl implements ObjectMapper {
 
-    private final static com.fasterxml.jackson.dataformat.xml.XmlMapper xmlMapper =
-            new com.fasterxml.jackson.dataformat.xml.XmlMapper();
+    private final static com.fasterxml.jackson.dataformat.xml.XmlMapper xmlMapper = xmlMapperInit();
 
-    static {
-        // 默认配置
-        xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+    /**
+     * 初始化xmlMapper
+     *
+     * @return
+     */
+    private static com.fasterxml.jackson.dataformat.xml.XmlMapper xmlMapperInit() {
+        com.fasterxml.jackson.dataformat.xml.XmlMapper xmlMapper =
+                new com.fasterxml.jackson.dataformat.xml.XmlMapper();
+        xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return xmlMapper;
     }
 
     @Override
     public <T> T parse(String content, Class<T> classType) throws MapperException {
         try {
-            return (T)xmlMapper.readValue(content,classType);
+            return (T) xmlMapper.readValue(content, classType);
         } catch (Exception e) {
-            throw new MapperException(e.getMessage() + ",data: " + content,e);
+            throw new MapperException(e.getMessage() + ",data: " + content, e);
         }
     }
 
@@ -33,9 +39,9 @@ public class XMLObjectMapperImpl implements ObjectMapper {
     @Override
     public <T> T parse(String content, TypeReference<T> typeRef) throws MapperException {
         try {
-            return (T)xmlMapper.readValue(content,typeRef);
+            return (T) xmlMapper.readValue(content, typeRef);
         } catch (Exception e) {
-            throw new MapperException(e.getMessage() + ",data: " + content,e);
+            throw new MapperException(e.getMessage() + ",data: " + content, e);
         }
     }
 
