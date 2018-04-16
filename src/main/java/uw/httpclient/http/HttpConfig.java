@@ -1,8 +1,6 @@
 package uw.httpclient.http;
 
-import okhttp3.ConnectionPool;
-
-import java.util.concurrent.TimeUnit;
+import okhttp3.Interceptor;
 
 /**
  * HttpConfig
@@ -27,81 +25,101 @@ public class HttpConfig {
     private final long writeTimeout;
 
     /**
-     * 连接池配置
+     * application interceptor
      */
-    private final ConnectionPool connectionPool;
+    private final Interceptor applicationInterceptor;
+
+    /**
+     * network interceptor
+     */
+    private final Interceptor networkInterceptor;
 
     public HttpConfig(Builder builder) {
         this.connectTimeout = builder.connectTimeout;
         this.readTimeout = builder.readTimeout;
         this.writeTimeout = builder.writeTimeout;
-        connectionPool = new ConnectionPool(builder.maxIdleConnections,builder.keepAliveDuration, TimeUnit.MILLISECONDS);
+        this.applicationInterceptor = builder.applicationInterceptor;
+        this.networkInterceptor = builder.networkInterceptor;
     }
 
-    public long connectTimeout(){
+    public long connectTimeout() {
         return connectTimeout;
     }
 
-    public long readTimeout(){
+    public long readTimeout() {
         return readTimeout;
     }
 
-    public long writeTimeout(){
+    public long writeTimeout() {
         return writeTimeout;
     }
 
-    public ConnectionPool connectionPool(){
-        return connectionPool;
+    public Interceptor applicationInterceptor() {
+        return applicationInterceptor;
+    }
+
+    public Interceptor networkInterceptor() {
+        return networkInterceptor;
     }
 
     public static class Builder {
+        /**
+         * 连接超时时间 - 毫秒
+         */
         private long connectTimeout;
+
+        /**
+         * 读超时时间 - 毫秒
+         */
         private long readTimeout;
+
+        /**
+         * 写超时时间 - 毫秒
+         */
         private long writeTimeout;
-        /**
-         * 最大空闲连接数 - 默认5个
-         */
-        private int maxIdleConnections;
 
         /**
-         * 存活时间 - 毫秒 - 默认5分钟
+         * application interceptor
          */
-        private long keepAliveDuration;
+        private Interceptor applicationInterceptor;
 
-        public Builder(){
-            connectTimeout = 10000;
-            readTimeout = 10000;
-            writeTimeout = 10000;
-            maxIdleConnections = 5;
-            keepAliveDuration = 300000;
+        /**
+         * network interceptor
+         */
+        private Interceptor networkInterceptor;
+
+        public Builder() {
+            this.connectTimeout = 10000;
+            this.readTimeout = 10000;
+            this.writeTimeout = 10000;
         }
 
-        public Builder connectTimeout(long connectTimeout){
+        public Builder connectTimeout(long connectTimeout) {
             this.connectTimeout = connectTimeout;
             return this;
         }
 
-        public Builder readTimeout(long readTimeout){
+        public Builder readTimeout(long readTimeout) {
             this.readTimeout = connectTimeout;
             return this;
         }
 
-        public Builder writeTimeout(long writeTimeout){
+        public Builder writeTimeout(long writeTimeout) {
             this.writeTimeout = writeTimeout;
             return this;
         }
 
-        public Builder maxIdleConnections(int maxIdleConnections){
-            this.maxIdleConnections = maxIdleConnections;
+        public Builder applicationInterceptor(Interceptor applicationInterceptor) {
+            this.applicationInterceptor = applicationInterceptor;
             return this;
         }
 
-        public Builder keepAliveDuration(int keepAliveDuration){
-            this.keepAliveDuration = keepAliveDuration;
+        public Builder networkInterceptor(Interceptor networkInterceptor) {
+            this.networkInterceptor = networkInterceptor;
             return this;
         }
 
-        public HttpConfig build(){
+        public HttpConfig build() {
             return new HttpConfig(this);
         }
     }
