@@ -23,7 +23,8 @@ public class HttpHelper {
 
 	public final static MediaType XML_UTF8 = MediaType.parse("application/xml; charset=utf-8");
 
-	private static final OkHttpClient globalOkHttpClient = new OkHttpClient.Builder().build();
+	private static final OkHttpClient globalOkHttpClient = new OkHttpClient.Builder()
+            .retryOnConnectionFailure(false).build();
 
 	private final OkHttpClient okHttpClient;
 
@@ -45,6 +46,8 @@ public class HttpHelper {
             okHttpClientBuilder.addInterceptor(httpConfig.applicationInterceptor());
         if(httpConfig.networkInterceptor() != null)
             okHttpClientBuilder.addNetworkInterceptor(httpConfig.networkInterceptor());
+        if(httpConfig.onRetryOnConnectionFailure())
+            okHttpClientBuilder.retryOnConnectionFailure(httpConfig.onRetryOnConnectionFailure());
         this.okHttpClient = okHttpClientBuilder.build();
 	}
 
