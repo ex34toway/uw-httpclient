@@ -1,6 +1,7 @@
 package uw.httpclient.http;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import uw.httpclient.json.JSONObjectMapperImpl;
 import uw.httpclient.xml.XMLObjectMapperImpl;
 import uw.task.exception.MapperException;
@@ -11,6 +12,14 @@ import uw.task.exception.MapperException;
  * @since 2017/9/20
  */
 public interface ObjectMapper {
+
+    /**
+     * Java 泛型绑定
+     * @param parametrized
+     * @param parameterClasses
+     * @return
+     */
+    JavaType constructParametricType(Class<?> parametrized, Class<?>... parameterClasses);
 
     /**
      * 解析

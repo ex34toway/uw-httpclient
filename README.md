@@ -1,6 +1,8 @@
 # uw-httpclient
 
 #### 更新日志
+    0.5.6 Jackson2 泛型参数解析
+    0.5.5 禁止重试
     0.5.4 添加拦截器配置支持
     0.5.3 统一配置DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES属性
     0.5.2 

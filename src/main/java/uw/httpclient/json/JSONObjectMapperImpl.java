@@ -2,6 +2,7 @@ package uw.httpclient.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import uw.httpclient.http.ObjectMapper;
 import uw.task.exception.MapperException;
 
@@ -24,6 +25,17 @@ public class JSONObjectMapperImpl implements ObjectMapper {
                 new com.fasterxml.jackson.databind.ObjectMapper();
         jsonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return jsonMapper;
+    }
+
+    /**
+     * Java 泛型绑定
+     * @param parametrized
+     * @param parameterClasses
+     * @return
+     */
+    @Override
+    public JavaType constructParametricType(Class<?> parametrized, Class<?>... parameterClasses) {
+        return jsonMapper.getTypeFactory().constructParametricType(parametrized,parameterClasses);
     }
 
     @Override
