@@ -58,6 +58,15 @@ public class XMLObjectMapperImpl implements ObjectMapper {
     }
 
     @Override
+    public <T> T parse(String content,JavaType type) throws MapperException {
+        try {
+            return xmlMapper.readValue(content, type);
+        } catch (Exception e) {
+            throw new MapperException(e.getMessage() + ",data: " + content, e);
+        }
+    }
+
+    @Override
     public String toString(Object object) throws MapperException {
         try {
             return xmlMapper.writeValueAsString(object);

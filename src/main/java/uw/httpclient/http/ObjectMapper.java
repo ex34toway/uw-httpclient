@@ -40,6 +40,16 @@ public interface ObjectMapper {
     <T> T parse(String content, TypeReference<T> typeRef) throws MapperException;
 
     /**
+     * 解析
+     * @param content
+     * @param type
+     * @param <T>
+     * @return
+     * @throws MapperException
+     */
+    <T> T parse(String content,JavaType type) throws MapperException;
+
+    /**
      * 转Json
      * @param object
      * @return

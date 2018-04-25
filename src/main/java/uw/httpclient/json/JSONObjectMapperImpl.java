@@ -58,6 +58,15 @@ public class JSONObjectMapperImpl implements ObjectMapper {
     }
 
     @Override
+    public <T> T parse(String content,JavaType type) throws MapperException {
+        try {
+            return jsonMapper.readValue(content, type);
+        } catch (Exception e) {
+            throw new MapperException(e.getMessage() + ",data: " + content, e);
+        }
+    }
+
+    @Override
     public String toString(Object object) throws MapperException {
         try {
             return jsonMapper.writeValueAsString(object);
