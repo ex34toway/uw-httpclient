@@ -34,7 +34,7 @@ public class JacksonJsonFailOnUnknownPropertiesUsageTest {
     }
 
     @Test
-    public void testCreaetRequestBodyFromStream() throws Exception
+    public void testCreateRequestBodyFromStream() throws Exception
     {
         Buffer buffer = new Buffer();
         LogInterface logInterface2 = new LogInterface();
