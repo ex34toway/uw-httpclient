@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.JavaType;
 import uw.httpclient.http.ObjectMapper;
 import uw.task.exception.MapperException;
 
+import java.io.OutputStream;
+
 /**
  * 基于Jackson Xml 的ObjectMapper
  * @author liliang
@@ -63,6 +65,15 @@ public class XMLObjectMapperImpl implements ObjectMapper {
             return xmlMapper.readValue(content, type);
         } catch (Exception e) {
             throw new MapperException(e.getMessage() + ",data: " + content, e);
+        }
+    }
+
+    @Override
+    public void write(OutputStream out, Object value) throws MapperException {
+        try {
+            xmlMapper.writeValue(out, value);
+        } catch (Exception e) {
+            throw new MapperException(e.getMessage() + ",data: " + value, e);
         }
     }
 

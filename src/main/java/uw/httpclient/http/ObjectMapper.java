@@ -6,6 +6,8 @@ import uw.httpclient.json.JSONObjectMapperImpl;
 import uw.httpclient.xml.XMLObjectMapperImpl;
 import uw.task.exception.MapperException;
 
+import java.io.OutputStream;
+
 /**
  * 对象Mapper
  * @author liliang
@@ -48,6 +50,14 @@ public interface ObjectMapper {
      * @throws MapperException
      */
     <T> T parse(String content,JavaType type) throws MapperException;
+
+    /**
+     * 将Json写入流
+     * @param out
+     * @param value
+     * @throws MapperException
+     */
+    void write(OutputStream out, Object value) throws MapperException;
 
     /**
      * 转Json
