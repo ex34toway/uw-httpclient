@@ -1,5 +1,6 @@
 package uw.httpclient.http;
 
+import okhttp3.Authenticator;
 import okhttp3.Interceptor;
 
 /**
@@ -23,6 +24,11 @@ public class HttpConfig {
      * 写超时时间 - 毫秒
      */
     private final long writeTimeout;
+
+    /**
+     * 全局验证器
+     */
+    private final Authenticator authenticator;
 
     /**
      * application interceptor
@@ -73,6 +79,7 @@ public class HttpConfig {
         this.connectTimeout = builder.connectTimeout;
         this.readTimeout = builder.readTimeout;
         this.writeTimeout = builder.writeTimeout;
+        this.authenticator = builder.authenticator;
         this.applicationInterceptor = builder.applicationInterceptor;
         this.networkInterceptor = builder.networkInterceptor;
         this.retryOnConnectionFailure = builder.retryOnConnectionFailure;
@@ -88,6 +95,10 @@ public class HttpConfig {
 
     public long writeTimeout() {
         return writeTimeout;
+    }
+
+    public Authenticator authenticator() {
+        return authenticator;
     }
 
     public Interceptor applicationInterceptor() {
@@ -117,6 +128,11 @@ public class HttpConfig {
          * 写超时时间 - 毫秒
          */
         private long writeTimeout;
+
+        /**
+         * 全局验证器
+         */
+        private Authenticator authenticator;
 
         /**
          * application interceptor
@@ -151,6 +167,11 @@ public class HttpConfig {
 
         public Builder writeTimeout(long writeTimeout) {
             this.writeTimeout = writeTimeout;
+            return this;
+        }
+
+        public Builder authenticator(Authenticator authenticator) {
+            this.authenticator = authenticator;
             return this;
         }
 

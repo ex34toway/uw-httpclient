@@ -41,6 +41,8 @@ public class HttpHelper {
 				.connectTimeout(httpConfig.connectTimeout(), TimeUnit.MILLISECONDS)
 				.readTimeout(httpConfig.readTimeout(), TimeUnit.MILLISECONDS)
 				.writeTimeout(httpConfig.writeTimeout(), TimeUnit.MILLISECONDS);
+		if(httpConfig.authenticator() != null)
+		    okHttpClientBuilder.authenticator(httpConfig.authenticator());
 		if(httpConfig.applicationInterceptor() != null)
             okHttpClientBuilder.addInterceptor(httpConfig.applicationInterceptor());
         if(httpConfig.networkInterceptor() != null)
