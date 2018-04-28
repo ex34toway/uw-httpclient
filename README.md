@@ -1,6 +1,7 @@
 # uw-httpclient
 
 #### 更新日志
+    0.5.9 添加HttpBasicAuthenticator,方便用户简单认证
     0.5.8 使用BufferRequestBody定制请求Body,ObjectMapper添加写入到流的接口
     0.5.7 ObjectMapper添加Java泛型绑定解析
     0.5.6 Jackson2 泛型参数解析
