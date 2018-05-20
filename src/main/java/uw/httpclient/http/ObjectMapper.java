@@ -1,9 +1,12 @@
 package uw.httpclient.http;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import uw.httpclient.json.JSONObjectMapperImpl;
 import uw.httpclient.xml.XMLObjectMapperImpl;
 import uw.task.exception.MapperException;
+
+import java.io.OutputStream;
 
 /**
  * 对象Mapper
@@ -11,6 +14,14 @@ import uw.task.exception.MapperException;
  * @since 2017/9/20
  */
 public interface ObjectMapper {
+
+    /**
+     * Java 泛型绑定
+     * @param parametrized
+     * @param parameterClasses
+     * @return
+     */
+    JavaType constructParametricType(Class<?> parametrized, Class<?>... parameterClasses);
 
     /**
      * 解析
@@ -29,6 +40,24 @@ public interface ObjectMapper {
      * @return
      */
     <T> T parse(String content, TypeReference<T> typeRef) throws MapperException;
+
+    /**
+     * 解析
+     * @param content
+     * @param type
+     * @param <T>
+     * @return
+     * @throws MapperException
+     */
+    <T> T parse(String content,JavaType type) throws MapperException;
+
+    /**
+     * 将Json写入流
+     * @param out
+     * @param value
+     * @throws MapperException
+     */
+    void write(OutputStream out, Object value) throws MapperException;
 
     /**
      * 转Json

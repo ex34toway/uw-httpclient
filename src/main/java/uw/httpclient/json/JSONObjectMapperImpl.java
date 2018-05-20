@@ -2,8 +2,11 @@ package uw.httpclient.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import uw.httpclient.http.ObjectMapper;
 import uw.task.exception.MapperException;
+
+import java.io.OutputStream;
 
 /**
  * 基于Jackson2 的ObjectMapper
@@ -26,6 +29,17 @@ public class JSONObjectMapperImpl implements ObjectMapper {
         return jsonMapper;
     }
 
+    /**
+     * Java 泛型绑定
+     * @param parametrized
+     * @param parameterClasses
+     * @return
+     */
+    @Override
+    public JavaType constructParametricType(Class<?> parametrized, Class<?>... parameterClasses) {
+        return jsonMapper.getTypeFactory().constructParametricType(parametrized,parameterClasses);
+    }
+
     @Override
     public <T> T parse(String content, Class<T> classType) throws MapperException {
         try {
@@ -42,6 +56,24 @@ public class JSONObjectMapperImpl implements ObjectMapper {
             return (T) jsonMapper.readValue(content, typeRef);
         } catch (Exception e) {
             throw new MapperException(e.getMessage() + ",data: " + content, e);
+        }
+    }
+
+    @Override
+    public <T> T parse(String content,JavaType type) throws MapperException {
+        try {
+            return jsonMapper.readValue(content, type);
+        } catch (Exception e) {
+            throw new MapperException(e.getMessage() + ",data: " + content, e);
+        }
+    }
+
+    @Override
+    public void write(OutputStream out, Object value) throws MapperException {
+        try {
+            jsonMapper.writeValue(out, value);
+        } catch (Exception e) {
+            throw new MapperException(e.getMessage() + ",data: " + value, e);
         }
     }
 
