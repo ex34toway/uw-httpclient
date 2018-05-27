@@ -20,7 +20,6 @@ public class HttpHelper {
 	public final static MediaType JSON_UTF8 = MediaType.parse("application/json; charset=utf-8");
 	public final static MediaType FORM_GBK = MediaType.parse("application/x-www-form-urlencoded; charset=gbk");
 	public final static MediaType JSON_GBK = MediaType.parse("application/json; charset=gbk");
-
 	public final static MediaType XML_UTF8 = MediaType.parse("application/xml; charset=utf-8");
 
 	private static final OkHttpClient globalOkHttpClient = new OkHttpClient.Builder()
