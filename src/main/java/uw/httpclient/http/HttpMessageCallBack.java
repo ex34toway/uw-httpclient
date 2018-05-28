@@ -7,6 +7,7 @@ import uw.task.exception.MapperException;
  * @author liliang
  * @since 2017/10/10
  */
+@FunctionalInterface
 public interface HttpMessageCallBack {
 
     /**
