@@ -1,7 +1,9 @@
 package uw.httpclient.http;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import okhttp3.*;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import uw.task.exception.TaskPartnerException;
 
 import java.util.Map;
@@ -319,7 +321,7 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -330,7 +332,7 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -341,7 +343,7 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> T getForObject(String url, Class<T> responseType, Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> T getForObject(String url, Class<T> responseType, Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -352,31 +354,7 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> T getForObject(String url, TypeReference<T> typeRef, Map<String, String> uriVariables) throws TaskPartnerException;
-
-    /**
-     * GET
-     * @param url
-     * @param responseType
-     * @param httpConfig
-     * @param uriVariables
-     * @param <T>
-     * @return
-     * @throws TaskPartnerException
-     */
-    <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, HttpConfig httpConfig,Map<String, String> uriVariables) throws TaskPartnerException;
-
-    /**
-     * GET
-     * @param url
-     * @param typeRef
-     * @param httpConfig
-     * @param uriVariables
-     * @param <T>
-     * @return
-     * @throws TaskPartnerException
-     */
-    <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, HttpConfig httpConfig,Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> T getForObject(String url, TypeReference<T> typeRef, Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -388,7 +366,7 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> T getForObject(String url, Class<T> responseType, HttpConfig httpConfig,Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, HttpConfig httpConfig, Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -400,7 +378,31 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> T getForObject(String url, TypeReference<T> typeRef, HttpConfig httpConfig,Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, HttpConfig httpConfig, Map<String, ?> uriVariables) throws TaskPartnerException;
+
+    /**
+     * GET
+     * @param url
+     * @param responseType
+     * @param httpConfig
+     * @param uriVariables
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T getForObject(String url, Class<T> responseType, HttpConfig httpConfig, Map<String, ?> uriVariables) throws TaskPartnerException;
+
+    /**
+     * GET
+     * @param url
+     * @param typeRef
+     * @param httpConfig
+     * @param uriVariables
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T getForObject(String url, TypeReference<T> typeRef, HttpConfig httpConfig, Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -411,8 +413,8 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers,Class<T> responseType,
-                                        Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, Class<T> responseType,
+                                        Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -424,7 +426,7 @@ public interface HttpInterface {
      * @throws TaskPartnerException
      */
     <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, TypeReference<T> typeRef,
-                                        Map<String, String> uriVariables) throws TaskPartnerException;
+                                        Map<String, ?> uriVariables) throws TaskPartnerException;
     /**
      * GET
      * @param url
@@ -434,8 +436,8 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> T getForObject(String url, Map<String, String> headers,Class<T> responseType,
-                                        Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> T getForObject(String url, Map<String, String> headers, Class<T> responseType,
+                       Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -446,34 +448,8 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> T getForObject(String url, Map<String, String> headers,TypeReference<T> typeRef,
-                       Map<String, String> uriVariables) throws TaskPartnerException;
-
-    /**
-     * GET
-     * @param url
-     * @param responseType
-     * @param httpConfig
-     * @param uriVariables
-     * @param <T>
-     * @return
-     * @throws TaskPartnerException
-     */
-    <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers,Class<T> responseType,HttpConfig httpConfig,
-                                        Map<String, String> uriVariables) throws TaskPartnerException;
-
-    /**
-     * GET
-     * @param url
-     * @param typeRef
-     * @param httpConfig
-     * @param uriVariables
-     * @param <T>
-     * @return
-     * @throws TaskPartnerException
-     */
-    <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers,TypeReference<T> typeRef,HttpConfig httpConfig,
-                                        Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> T getForObject(String url, Map<String, String> headers, TypeReference<T> typeRef,
+                       Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -485,8 +461,8 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> T getForObject(String url, Map<String, String> headers,Class<T> responseType,HttpConfig httpConfig,
-                                        Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, Class<T> responseType, HttpConfig httpConfig,
+                                        Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -498,8 +474,34 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> T getForObject(String url, Map<String, String> headers,TypeReference<T> typeRef,HttpConfig httpConfig,
-                       Map<String, String> uriVariables) throws TaskPartnerException;
+    <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, TypeReference<T> typeRef, HttpConfig httpConfig,
+                                        Map<String, ?> uriVariables) throws TaskPartnerException;
+
+    /**
+     * GET
+     * @param url
+     * @param responseType
+     * @param httpConfig
+     * @param uriVariables
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T getForObject(String url, Map<String, String> headers, Class<T> responseType, HttpConfig httpConfig,
+                       Map<String, ?> uriVariables) throws TaskPartnerException;
+
+    /**
+     * GET
+     * @param url
+     * @param typeRef
+     * @param httpConfig
+     * @param uriVariables
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T getForObject(String url, Map<String, String> headers, TypeReference<T> typeRef, HttpConfig httpConfig,
+                       Map<String, ?> uriVariables) throws TaskPartnerException;
 
     /**
      * POST

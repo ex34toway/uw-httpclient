@@ -2,9 +2,9 @@ package uw.httpclient.http;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.*;
-import uw.task.exception.TaskPartnerException;
-import uw.task.exception.MapperException;
 import uw.httpclient.util.StringUriTemplateUtil;
+import uw.task.exception.MapperException;
+import uw.task.exception.TaskPartnerException;
 
 import java.io.IOException;
 import java.util.Map;
@@ -207,7 +207,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
-	public <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, Map<String, String> uriVariables)
+	public <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, Map<String, ?> uriVariables)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
 		ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), responseType);
@@ -223,8 +223,8 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    public <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, Map<String, String> uriVariables) throws TaskPartnerException {
-        Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
+	public <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, Map<String, ?> uriVariables) throws TaskPartnerException {
+		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
         ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), typeRef);
         return handleResponse(null, request, extractor);
     }
@@ -239,7 +239,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
-	public <T> T getForObject(String url, Class<T> responseType, Map<String, String> uriVariables)
+	public <T> T getForObject(String url, Class<T> responseType, Map<String, ?> uriVariables)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
 		ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
@@ -255,8 +255,8 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    public <T> T getForObject(String url, TypeReference<T> typeRef, Map<String, String> uriVariables) throws TaskPartnerException {
-        Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
+	public <T> T getForObject(String url, TypeReference<T> typeRef, Map<String, ?> uriVariables) throws TaskPartnerException {
+		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
         return handleResponse(null, request, extractor);
     }
@@ -273,7 +273,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @throws TaskPartnerException
 	 */
 	public <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, HttpConfig httpConfig,
-			Map<String, String> uriVariables) throws TaskPartnerException {
+											   Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
 		ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), responseType);
 		return handleResponse(httpConfig, request, extractor);
@@ -290,8 +290,8 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @throws TaskPartnerException
      */
     public <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, HttpConfig httpConfig,
-                                        Map<String, String> uriVariables) throws TaskPartnerException {
-        Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
+											   Map<String, ?> uriVariables) throws TaskPartnerException {
+		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
         ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), typeRef);
         return handleResponse(httpConfig, request, extractor);
     }
@@ -307,7 +307,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
-	public <T> T getForObject(String url, Class<T> responseType, HttpConfig httpConfig, Map<String, String> uriVariables)
+	public <T> T getForObject(String url, Class<T> responseType, HttpConfig httpConfig, Map<String, ?> uriVariables)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
 		ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
@@ -324,8 +324,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    public <T> T getForObject(String url, TypeReference<T> typeRef, HttpConfig httpConfig,Map<String, String> uriVariables) throws TaskPartnerException
-    {
+	public <T> T getForObject(String url, TypeReference<T> typeRef, HttpConfig httpConfig, Map<String, ?> uriVariables) throws TaskPartnerException {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
         return handleResponse(httpConfig, request, extractor);
@@ -552,7 +551,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @throws TaskPartnerException
 	 */
 	public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, Class<T> responseType,
-			Map<String, String> uriVariables) throws TaskPartnerException {
+											   Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
 				.headers(Headers.of(headers)).build();
 		ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), responseType);
@@ -569,8 +568,8 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @throws TaskPartnerException
      */
     public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, TypeReference<T> typeRef,
-                                        Map<String, String> uriVariables) throws TaskPartnerException {
-        Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
+											   Map<String, ?> uriVariables) throws TaskPartnerException {
+		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
                 .headers(Headers.of(headers)).build();
         ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), typeRef);
         return handleResponse(null, request, extractor);
@@ -587,7 +586,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @throws TaskPartnerException
 	 */
 	public <T> T getForObject(String url, Map<String, String> headers, Class<T> responseType,
-			Map<String, String> uriVariables) throws TaskPartnerException {
+							  Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
 				.headers(Headers.of(headers)).build();
 		ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
@@ -603,9 +602,9 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    public <T> T getForObject(String url, Map<String, String> headers,TypeReference<T> typeRef,
-                       Map<String, String> uriVariables) throws TaskPartnerException {
-        Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
+    public <T> T getForObject(String url, Map<String, String> headers, TypeReference<T> typeRef,
+							  Map<String, ?> uriVariables) throws TaskPartnerException {
+		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
                 .headers(Headers.of(headers)).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
         return handleResponse(null, request, extractor);
@@ -623,7 +622,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @throws TaskPartnerException
 	 */
 	public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, Class<T> responseType,
-			HttpConfig httpConfig, Map<String, String> uriVariables) throws TaskPartnerException {
+											   HttpConfig httpConfig, Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
 				.headers(Headers.of(headers)).build();
 		ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), responseType);
@@ -640,9 +639,9 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers,TypeReference<T> typeRef,HttpConfig httpConfig,
-                                        Map<String, String> uriVariables) throws TaskPartnerException {
-        Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
+    public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, TypeReference<T> typeRef, HttpConfig httpConfig,
+											   Map<String, ?> uriVariables) throws TaskPartnerException {
+		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
                 .headers(Headers.of(headers)).build();
         ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), typeRef);
         return handleResponse(httpConfig, request, extractor);
@@ -660,7 +659,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @throws TaskPartnerException
 	 */
 	public <T> T getForObject(String url, Map<String, String> headers, Class<T> responseType, HttpConfig httpConfig,
-			Map<String, String> uriVariables) throws TaskPartnerException {
+							  Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
 				.headers(Headers.of(headers)).build();
 		ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
@@ -677,9 +676,9 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    public <T> T getForObject(String url, Map<String, String> headers,TypeReference<T> typeRef,HttpConfig httpConfig,
-                       Map<String, String> uriVariables) throws TaskPartnerException {
-        Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
+    public <T> T getForObject(String url, Map<String, String> headers, TypeReference<T> typeRef, HttpConfig httpConfig,
+							  Map<String, ?> uriVariables) throws TaskPartnerException {
+		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
                 .headers(Headers.of(headers)).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
         return handleResponse(httpConfig, request, extractor);
