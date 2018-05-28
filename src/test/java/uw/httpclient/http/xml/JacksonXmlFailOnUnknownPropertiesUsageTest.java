@@ -1,12 +1,9 @@
 package uw.httpclient.http.xml;
 
-import static org.junit.Assert.*;
-
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.google.common.collect.Maps;
 import org.junit.Test;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import uw.httpclient.http.HttpInterface;
 import uw.httpclient.http.ObjectMapper;
 import uw.httpclient.http.ResponseWrapper;
@@ -18,6 +15,8 @@ import uw.task.exception.TaskPartnerException;
 
 import java.io.IOException;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * 解析Xml中遇到的问题
@@ -105,4 +104,15 @@ public class JacksonXmlFailOnUnknownPropertiesUsageTest {
                 httpInterface.postForEntity("http://localhost:8087/cookie/test",String.class,loginParam);
         System.out.println(responseWrapper.getResponseBody());
     }
+
+    @Test
+    public void testGetTerry() throws TaskPartnerException {
+        HttpInterface httpInterface = new JsonInterfaceHelper(content -> content.substring(0, 1));
+        Map<String, String> loginParam = Maps.newHashMap();
+        loginParam.put("username", "Terry");
+        loginParam.put("password", "test");
+        String str = httpInterface.getForObject("http://www.baidu.com", String.class, loginParam);
+        System.out.println(str);
+    }
+
 }
