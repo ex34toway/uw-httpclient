@@ -39,4 +39,16 @@ public class GetMethodTest {
                         });
         System.out.println(serviceResponseWrapper.getValue().size());
     }
+
+    /**
+     * 关于uriVariables的使用@Terry
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetVariablesInUri() throws Exception {
+        String resp = httpInterface.getForObject("http://www.baidu.com/s?wd={searchWord}",String.class,
+                "小说");
+        System.out.println(resp);
+    }
 }
