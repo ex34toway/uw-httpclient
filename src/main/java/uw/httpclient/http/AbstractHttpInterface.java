@@ -26,6 +26,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+	@Override
 	public <T> ResponseWrapper<T> requestForEntity(Request request, Class<T> responseType) throws TaskPartnerException {
 		ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), responseType);
 		return handleResponse(null, request, extractor);
@@ -39,6 +40,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> requestForEntity(Request request, TypeReference<T> typeRef) throws TaskPartnerException {
         ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), typeRef);
         return handleResponse(null, request, extractor);
@@ -53,6 +55,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T requestForObject(Request request, Class<T> responseType) throws TaskPartnerException {
 		ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
 		return handleResponse(null, request, extractor);
@@ -66,6 +69,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T requestForObject(Request request, TypeReference<T> typeRef) throws TaskPartnerException {
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
         return handleResponse(null, request, extractor);
@@ -81,6 +85,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> requestEntity(Request request, Class<T> responseType, HttpConfig httpConfig)
 			throws TaskPartnerException {
 		ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), responseType);
@@ -96,6 +101,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> requestEntity(Request request, TypeReference<T> typeRef,HttpConfig httpConfig)
             throws TaskPartnerException {
         ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), typeRef);
@@ -112,6 +118,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T requestForObject(Request request, Class<T> responseType, HttpConfig httpConfig)
 			throws TaskPartnerException {
 		ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
@@ -127,10 +134,74 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T requestForObject(Request request, TypeReference<T> typeRef,HttpConfig httpConfig) throws TaskPartnerException
     {
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
         return handleResponse(httpConfig, request, extractor);
+    }
+
+    /**
+     * GET
+     * @param url
+     * @param responseType
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    @Override
+    public <T> T getForObject(String url, Class<T> responseType) throws TaskPartnerException
+    {
+        Request request = new Request.Builder().url(url).build();
+        ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
+        return handleResponse(null, request, extractor);
+    }
+
+    /**
+     * GET
+     * @param url
+     * @param responseType
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    @Override
+    public <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType) throws TaskPartnerException
+    {
+        Request request = new Request.Builder().url(url).build();
+        ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), responseType);
+        return handleResponse(null, request, extractor);
+    }
+
+    /**
+     * GET
+     * @param url
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    @Override
+    public <T> T getForObject(String url, TypeReference<T> typeRef) throws TaskPartnerException
+    {
+        Request request = new Request.Builder().url(url).build();
+        ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
+        return handleResponse(null, request, extractor);
+    }
+
+    /**
+     * GET
+     * @param url
+     * @param typeRef
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    @Override
+    public <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef) throws TaskPartnerException
+    {
+        Request request = new Request.Builder().url(url).build();
+        ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), typeRef);
+        return handleResponse(null, request, extractor);
     }
 
 	/**
@@ -143,6 +214,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, Object... uriVariables)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -159,6 +231,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef,Object... uriVariables) throws TaskPartnerException
     {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -176,6 +249,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T getForObject(String url, Class<T> responseType, Object... uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
 		ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
@@ -191,6 +265,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T getForObject(String url, TypeReference<T> typeRef,Object... uriVariables) throws TaskPartnerException {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
@@ -207,6 +282,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, Map<String, ?> uriVariables)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -223,6 +299,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
 	public <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
         ResponseExtractor<ResponseWrapper<T>> extractor = responseEntityExtractor(objectMapper(), typeRef);
@@ -239,6 +316,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T getForObject(String url, Class<T> responseType, Map<String, ?> uriVariables)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -255,6 +333,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
 	public <T> T getForObject(String url, TypeReference<T> typeRef, Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
@@ -272,6 +351,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, HttpConfig httpConfig,
 											   Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -289,6 +369,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, HttpConfig httpConfig,
 											   Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -307,6 +388,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T getForObject(String url, Class<T> responseType, HttpConfig httpConfig, Map<String, ?> uriVariables)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -324,6 +406,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
 	public <T> T getForObject(String url, TypeReference<T> typeRef, HttpConfig httpConfig, Map<String, ?> uriVariables) throws TaskPartnerException {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
@@ -341,6 +424,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType, HttpConfig httpConfig,
 			Object... uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -358,6 +442,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef, HttpConfig httpConfig,Object... uriVariables) throws TaskPartnerException
     {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -376,6 +461,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T getForObject(String url, Class<T> responseType, HttpConfig httpConfig, Object... uriVariables)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -393,6 +479,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T getForObject(String url, TypeReference<T> typeRef, HttpConfig httpConfig,Object... uriVariables) throws TaskPartnerException
     {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables)).build();
@@ -409,6 +496,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @param <T>
 	 * @return
 	 */
+    @Override
 	public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, Class<T> responseType,
 			Object... uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -425,6 +513,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @param <T>
      * @return
      */
+    @Override
     public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, TypeReference<T> typeRef,
                                         Object... uriVariables) throws TaskPartnerException {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -442,6 +531,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @param <T>
 	 * @return
 	 */
+    @Override
 	public <T> T getForObject(String url, Map<String, String> headers, Class<T> responseType, Object... uriVariables)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -458,6 +548,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @param <T>
      * @return
      */
+    @Override
     public <T> T getForObject(String url, Map<String, String> headers, TypeReference<T> typeRef,
                        Object... uriVariables) throws TaskPartnerException {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -477,6 +568,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, Class<T> responseType,
 			HttpConfig httpConfig, Object... uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -495,6 +587,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, TypeReference<T> typeRef,HttpConfig httpConfig,
                                         Object... uriVariables) throws TaskPartnerException {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -514,6 +607,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T getForObject(String url, Map<String, String> headers, Class<T> responseType, HttpConfig httpConfig,
 			Object... uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -532,6 +626,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T getForObject(String url, Map<String, String> headers, TypeReference<T> typeRef,HttpConfig httpConfig,
                        Object... uriVariables) throws TaskPartnerException {
         Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -550,6 +645,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, Class<T> responseType,
 											   Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -567,6 +663,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, TypeReference<T> typeRef,
 											   Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -585,6 +682,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T getForObject(String url, Map<String, String> headers, Class<T> responseType,
 							  Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -602,6 +700,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T getForObject(String url, Map<String, String> headers, TypeReference<T> typeRef,
 							  Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -621,6 +720,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, Class<T> responseType,
 											   HttpConfig httpConfig, Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -639,6 +739,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> getForEntity(String url, Map<String, String> headers, TypeReference<T> typeRef, HttpConfig httpConfig,
 											   Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -658,6 +759,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T getForObject(String url, Map<String, String> headers, Class<T> responseType, HttpConfig httpConfig,
 							  Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -676,6 +778,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T getForObject(String url, Map<String, String> headers, TypeReference<T> typeRef, HttpConfig httpConfig,
 							  Map<String, ?> uriVariables) throws TaskPartnerException {
 		Request request = new Request.Builder().url(StringUriTemplateUtil.expand(url, uriVariables))
@@ -694,6 +797,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> postForEntity(String url, Class<T> responseType, RequestBody requestBody)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(requestBody).build();
@@ -710,6 +814,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef, RequestBody requestBody)
             throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(requestBody).build();
@@ -727,6 +832,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T postForObject(String url, Class<T> responseType, RequestBody requestBody) throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(requestBody).build();
 		ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), responseType);
@@ -743,6 +849,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, Class<T> responseType, Map<String,String> formParam) throws TaskPartnerException
     {
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
@@ -763,6 +870,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Class<T> responseType, Map<String,String> formParam) throws TaskPartnerException
     {
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
@@ -783,6 +891,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, TypeReference<T> typeRef, RequestBody requestBody) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(requestBody).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
@@ -798,6 +907,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef, Map<String,String> formParam) throws TaskPartnerException
     {
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
@@ -818,6 +928,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, TypeReference<T> typeRef, Map<String,String> formParam) throws TaskPartnerException
     {
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
@@ -840,6 +951,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> postForEntity(String url, Class<T> responseType, HttpConfig httpConfig,
 			RequestBody requestBody) throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(requestBody).build();
@@ -857,6 +969,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef, HttpConfig httpConfig,
                                          RequestBody requestBody) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(requestBody).build();
@@ -875,6 +988,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T postForObject(String url, Class<T> responseType, HttpConfig httpConfig, RequestBody requestBody)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(requestBody).build();
@@ -892,6 +1006,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, TypeReference<T> typeRef, HttpConfig httpConfig,RequestBody requestBody) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(requestBody).build();
         ResponseExtractor<T> extractor = new ObjectExtractor<>(objectMapper(), typeRef);
@@ -909,6 +1024,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> postForEntity(String url, Map<String, String> headers, Class<T> responseType,
 			RequestBody requestBody) throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(requestBody).headers(Headers.of(headers)).build();
@@ -926,6 +1042,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, Map<String,String> headers,TypeReference<T> typeRef,
                                          RequestBody requestBody) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(requestBody).headers(Headers.of(headers)).build();
@@ -944,6 +1061,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T postForObject(String url, Map<String, String> headers, Class<T> responseType, RequestBody requestBody)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(requestBody).headers(Headers.of(headers)).build();
@@ -961,6 +1079,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Map<String,String> headers,TypeReference<T> typeRef,
                         RequestBody requestBody) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(requestBody).headers(Headers.of(headers)).build();
@@ -980,6 +1099,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> postForEntity(String url, Map<String, String> headers, Class<T> responseType,
 			HttpConfig httpConfig, RequestBody requestBody) throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(requestBody).headers(Headers.of(headers)).build();
@@ -998,6 +1118,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, Map<String,String> headers,TypeReference<T> typeRef, HttpConfig httpConfig,
                                          RequestBody requestBody) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(requestBody).headers(Headers.of(headers)).build();
@@ -1017,6 +1138,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T postForObject(String url, Map<String, String> headers, Class<T> responseType, HttpConfig httpConfig,
 			RequestBody requestBody) throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(requestBody).headers(Headers.of(headers)).build();
@@ -1035,6 +1157,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Map<String,String> headers,TypeReference<T> typeRef, HttpConfig httpConfig,
                         RequestBody requestBody) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(requestBody).headers(Headers.of(headers)).build();
@@ -1052,6 +1175,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> postForEntity(String url, Class<T> responseType, String content, MediaType mediaType)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content)).build();
@@ -1068,6 +1192,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef,
                                          String content, MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content)).build();
@@ -1085,6 +1210,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
 	public <T> T postForObject(String url, Class<T> responseType, String content, MediaType mediaType)
 			throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content)).build();
@@ -1101,6 +1227,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, TypeReference<T> typeRef,
                         String content, MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content)).build();
@@ -1118,6 +1245,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, Class<T> responseType,
                                          Object content, MediaType mediaType) throws TaskPartnerException
     {
@@ -1137,6 +1265,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef,
                                          Object content, MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(
@@ -1155,6 +1284,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Class<T> responseType,
                         Object content, MediaType mediaType) throws TaskPartnerException
     {
@@ -1174,6 +1304,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, TypeReference<T> typeRef,
                         Object content, MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(
@@ -1193,6 +1324,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> postForEntity(String url, Class<T> responseType, HttpConfig httpConfig,
 			String content, MediaType mediaType) throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content)).build();
@@ -1210,6 +1342,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef, HttpConfig httpConfig,
                                          String content, MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content)).build();
@@ -1228,6 +1361,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T postForObject(String url, Map<String, String> headers, Class<T> responseType, String content,
 			MediaType mediaType) throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content))
@@ -1246,6 +1380,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Map<String,String> headers, TypeReference<T> typeRef,
                         String content,MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content))
@@ -1265,6 +1400,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, Class<T> responseType, HttpConfig httpConfig,
                                          Object content, MediaType mediaType) throws TaskPartnerException
     {
@@ -1285,6 +1421,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, TypeReference<T> typeRef, HttpConfig httpConfig,
                                          Object content, MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(
@@ -1304,6 +1441,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Map<String,String> headers, Class<T> responseType,
                         Object content,MediaType mediaType) throws TaskPartnerException
     {
@@ -1324,6 +1462,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, Map<String,String> headers, Class<T> responseType,
                                          Object content,MediaType mediaType) throws TaskPartnerException
     {
@@ -1344,6 +1483,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Map<String,String> headers, TypeReference<T> typeRef,
                         Object content,MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, objectMapper().toString(content)))
@@ -1364,6 +1504,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> ResponseWrapper<T> postForEntity(String url, Map<String, String> headers, Class<T> responseType,
 			HttpConfig httpConfig, String content, MediaType mediaType) throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content))
@@ -1383,6 +1524,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, Map<String,String> headers, TypeReference<T> typeRef,HttpConfig httpConfig,
                                          String content,MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content))
@@ -1403,6 +1545,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
 	 * @return
 	 * @throws TaskPartnerException
 	 */
+    @Override
 	public <T> T postForObject(String url, Map<String, String> headers, Class<T> responseType, HttpConfig httpConfig,
 			String content, MediaType mediaType) throws TaskPartnerException {
 		Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content))
@@ -1422,6 +1565,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Map<String,String> headers, TypeReference<T> typeRef,HttpConfig httpConfig,
                         String content,MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, content))
@@ -1441,6 +1585,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, Map<String,String> headers, Class<T> responseType,HttpConfig httpConfig,
                                          Object content,MediaType mediaType) throws TaskPartnerException
     {
@@ -1461,6 +1606,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> ResponseWrapper<T> postForEntity(String url, Map<String,String> headers, TypeReference<T> typeRef,HttpConfig httpConfig,
                                          Object content,MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(RequestBody.create(mediaType, objectMapper().toString(content)))
@@ -1480,6 +1626,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Map<String,String> headers, Class<T> responseType,HttpConfig httpConfig,
                         Object content,MediaType mediaType) throws TaskPartnerException
     {
@@ -1501,6 +1648,7 @@ public abstract class AbstractHttpInterface implements HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
+    @Override
     public <T> T postForObject(String url, Map<String,String> headers, TypeReference<T> typeRef,HttpConfig httpConfig,
                         Object content,MediaType mediaType) throws TaskPartnerException {
         Request request = new Request.Builder().url(url).post(

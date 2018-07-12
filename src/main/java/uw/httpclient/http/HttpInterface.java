@@ -128,6 +128,56 @@ public interface HttpInterface {
      * GET
      * @param url
      * @param responseType
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T getForObject(String url, Class<T> responseType) throws TaskPartnerException;
+
+    /**
+     * GET
+     * @param url
+     * @param responseType
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> ResponseWrapper<T> getForEntity(String url, Class<T> responseType) throws TaskPartnerException;
+
+    /**
+     * GET
+     * @param url
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T getForObject(String url, TypeReference<T> typeRef) throws TaskPartnerException;
+
+    /**
+     * GET
+     * @param url
+     * @param typeRef
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef) throws TaskPartnerException;
+
+    /**
+     * GET
+     * @param url
+     * @param responseType
+     * @param uriVariables
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T getForObject(String url, Class<T> responseType,Object... uriVariables) throws TaskPartnerException;
+
+    /**
+     * GET
+     * @param url
+     * @param responseType
      * @param uriVariables
      * @param <T>
      * @return
@@ -144,18 +194,7 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef,Object... uriVariables) throws TaskPartnerException;
-
-    /**
-     * GET
-     * @param url
-     * @param responseType
-     * @param uriVariables
-     * @param <T>
-     * @return
-     * @throws TaskPartnerException
-     */
-    <T> T getForObject(String url, Class<T> responseType,Object... uriVariables) throws TaskPartnerException;
+    <T> T getForObject(String url, TypeReference<T> typeRef,Object... uriVariables) throws TaskPartnerException;
 
     /**
      * GET
@@ -166,7 +205,7 @@ public interface HttpInterface {
      * @return
      * @throws TaskPartnerException
      */
-    <T> T getForObject(String url, TypeReference<T> typeRef,Object... uriVariables) throws TaskPartnerException;
+    <T> ResponseWrapper<T> getForEntity(String url, TypeReference<T> typeRef,Object... uriVariables) throws TaskPartnerException;
 
     /**
      * GET
