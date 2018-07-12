@@ -1,6 +1,8 @@
 # uw-httpclient
 
 #### 更新日志
+    0.6.1 添加多个简单HTTP GET请求方法
+    0.6.0 添加全局验证器配置
     0.5.9 添加HttpBasicAuthenticator,方便用户简单认证
     0.5.8 使用BufferRequestBody定制请求Body,ObjectMapper添加写入到流的接口
     0.5.7 ObjectMapper添加Java泛型绑定解析
