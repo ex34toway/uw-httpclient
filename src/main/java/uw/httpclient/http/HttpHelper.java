@@ -49,6 +49,8 @@ public class HttpHelper {
             okHttpClientBuilder.addNetworkInterceptor(httpConfig.networkInterceptor());
         if(httpConfig.onRetryOnConnectionFailure())
             okHttpClientBuilder.retryOnConnectionFailure(httpConfig.onRetryOnConnectionFailure());
+        if(httpConfig.connectionPool() != null)
+            okHttpClientBuilder.connectionPool(httpConfig.connectionPool());
         this.okHttpClient = okHttpClientBuilder.build();
 	}
 

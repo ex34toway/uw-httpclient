@@ -1,6 +1,7 @@
 package uw.httpclient.http;
 
 import okhttp3.Authenticator;
+import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
 
 /**
@@ -75,6 +76,11 @@ public class HttpConfig {
      */
     private final boolean retryOnConnectionFailure;
 
+    /**
+     * 连接池
+     */
+    private ConnectionPool connectionPool;
+
     public HttpConfig(Builder builder) {
         this.connectTimeout = builder.connectTimeout;
         this.readTimeout = builder.readTimeout;
@@ -83,6 +89,7 @@ public class HttpConfig {
         this.applicationInterceptor = builder.applicationInterceptor;
         this.networkInterceptor = builder.networkInterceptor;
         this.retryOnConnectionFailure = builder.retryOnConnectionFailure;
+        this.connectionPool = builder.connectionPool;
     }
 
     public long connectTimeout() {
@@ -111,6 +118,10 @@ public class HttpConfig {
 
     public boolean onRetryOnConnectionFailure() {
         return retryOnConnectionFailure;
+    }
+
+    public ConnectionPool connectionPool() {
+        return connectionPool;
     }
 
     public static class Builder {
@@ -148,6 +159,11 @@ public class HttpConfig {
          * RetryOnConnectionFailure
          */
         private boolean retryOnConnectionFailure = false;
+
+        /**
+         * 连接池
+         */
+        private ConnectionPool connectionPool;
 
         public Builder() {
             this.connectTimeout = 10000;
@@ -187,6 +203,11 @@ public class HttpConfig {
 
         public Builder retryOnConnectionFailure(boolean retryOnConnectionFailure){
             this.retryOnConnectionFailure = retryOnConnectionFailure;
+            return this;
+        }
+
+        public Builder connectionPool(ConnectionPool connectionPool){
+            this.connectionPool = connectionPool;
             return this;
         }
 
