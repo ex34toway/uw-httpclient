@@ -3,6 +3,7 @@ package uw.httpclient.json;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uw.httpclient.http.ObjectMapper;
 import uw.task.exception.MapperException;
 
@@ -25,6 +26,8 @@ public class JSONObjectMapperImpl implements ObjectMapper {
     private static com.fasterxml.jackson.databind.ObjectMapper jsonMapperInit() {
         com.fasterxml.jackson.databind.ObjectMapper jsonMapper =
                 new com.fasterxml.jackson.databind.ObjectMapper();
+        // Java时间模块
+        jsonMapper.registerModule(new JavaTimeModule());
         jsonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return jsonMapper;
     }
