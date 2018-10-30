@@ -1,6 +1,7 @@
 # uw-httpclient
 
 #### 更新日志
+    0.6.4 支持配置okhttp SSLContext构建加密请求
     0.6.3 注入jsr310日期处理模块
     0.6.1 添加多个简单HTTP GET请求方法
     0.6.0 添加全局验证器配置

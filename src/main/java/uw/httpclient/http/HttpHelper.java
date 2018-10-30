@@ -37,22 +37,26 @@ public class HttpHelper {
 	 * @return
 	 */
 	public HttpHelper(final HttpConfig httpConfig) {
-		OkHttpClient.Builder okHttpClientBuilder = globalOkHttpClient.newBuilder()
-				.connectTimeout(httpConfig.connectTimeout(), TimeUnit.MILLISECONDS)
-				.readTimeout(httpConfig.readTimeout(), TimeUnit.MILLISECONDS)
-				.writeTimeout(httpConfig.writeTimeout(), TimeUnit.MILLISECONDS);
-		if(httpConfig.authenticator() != null)
-		    okHttpClientBuilder.authenticator(httpConfig.authenticator());
-		if(httpConfig.applicationInterceptor() != null)
+        OkHttpClient.Builder okHttpClientBuilder = globalOkHttpClient.newBuilder()
+                .connectTimeout(httpConfig.connectTimeout(), TimeUnit.MILLISECONDS)
+                .readTimeout(httpConfig.readTimeout(), TimeUnit.MILLISECONDS)
+                .writeTimeout(httpConfig.writeTimeout(), TimeUnit.MILLISECONDS);
+        if (httpConfig.authenticator() != null)
+            okHttpClientBuilder.authenticator(httpConfig.authenticator());
+        if (httpConfig.applicationInterceptor() != null)
             okHttpClientBuilder.addInterceptor(httpConfig.applicationInterceptor());
-        if(httpConfig.networkInterceptor() != null)
+        if (httpConfig.networkInterceptor() != null)
             okHttpClientBuilder.addNetworkInterceptor(httpConfig.networkInterceptor());
-        if(httpConfig.onRetryOnConnectionFailure())
+        if (httpConfig.onRetryOnConnectionFailure())
             okHttpClientBuilder.retryOnConnectionFailure(httpConfig.onRetryOnConnectionFailure());
-        if(httpConfig.connectionPool() != null)
+        if (httpConfig.connectionPool() != null)
             okHttpClientBuilder.connectionPool(httpConfig.connectionPool());
+        if (httpConfig.sslSocketFactory() != null || httpConfig.trustManager() != null)
+            okHttpClientBuilder.sslSocketFactory(httpConfig.sslSocketFactory(), httpConfig.trustManager());
+        if (httpConfig.hostnameVerifier() != null)
+            okHttpClientBuilder.hostnameVerifier(httpConfig.hostnameVerifier());
         this.okHttpClient = okHttpClientBuilder.build();
-	}
+    }
 
 	/**
 	 * 执行请求

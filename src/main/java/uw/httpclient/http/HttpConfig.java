@@ -4,6 +4,10 @@ import okhttp3.Authenticator;
 import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
+
 /**
  * HttpConfig
  * @author liliang
@@ -79,7 +83,22 @@ public class HttpConfig {
     /**
      * 连接池
      */
-    private ConnectionPool connectionPool;
+    private final ConnectionPool connectionPool;
+
+    /**
+     * sslSocketFactory
+     */
+    private final SSLSocketFactory sslSocketFactory;
+
+    /**
+     * trustManager
+     */
+    private final X509TrustManager trustManager;
+
+    /**
+     * hostnameVerifier
+     */
+    private final HostnameVerifier hostnameVerifier;
 
     public HttpConfig(Builder builder) {
         this.connectTimeout = builder.connectTimeout;
@@ -90,6 +109,9 @@ public class HttpConfig {
         this.networkInterceptor = builder.networkInterceptor;
         this.retryOnConnectionFailure = builder.retryOnConnectionFailure;
         this.connectionPool = builder.connectionPool;
+        this.sslSocketFactory = builder.sslSocketFactory;
+        this.trustManager = builder.trustManager;
+        this.hostnameVerifier = builder.hostnameVerifier;
     }
 
     public long connectTimeout() {
@@ -122,6 +144,18 @@ public class HttpConfig {
 
     public ConnectionPool connectionPool() {
         return connectionPool;
+    }
+
+    public SSLSocketFactory sslSocketFactory() {
+        return sslSocketFactory;
+    }
+
+    public X509TrustManager trustManager() {
+        return trustManager;
+    }
+
+    public HostnameVerifier hostnameVerifier() {
+        return hostnameVerifier;
     }
 
     public static class Builder {
@@ -164,6 +198,21 @@ public class HttpConfig {
          * 连接池
          */
         private ConnectionPool connectionPool;
+
+        /**
+         * sslSocketFactory
+         */
+        private SSLSocketFactory sslSocketFactory;
+
+        /**
+         * trustManager
+         */
+        private X509TrustManager trustManager;
+
+        /**
+         * hostnameVerifier
+         */
+        private HostnameVerifier hostnameVerifier;
 
         public Builder() {
             this.connectTimeout = 10000;
@@ -208,6 +257,17 @@ public class HttpConfig {
 
         public Builder connectionPool(ConnectionPool connectionPool){
             this.connectionPool = connectionPool;
+            return this;
+        }
+
+        public Builder sslSocketFactory(SSLSocketFactory sslSocketFactory, X509TrustManager trustManager){
+            this.sslSocketFactory = sslSocketFactory;
+            this.trustManager = trustManager;
+            return this;
+        }
+
+        public Builder hostnameVerifier(HostnameVerifier hostnameVerifier) {
+            this.hostnameVerifier = hostnameVerifier;
             return this;
         }
 
