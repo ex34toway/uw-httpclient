@@ -14,6 +14,11 @@ import java.io.IOException;
 public interface ResponseExtractor<T> {
 
     /**
+     * 直接取Response,主要针对响应文件流等HTTP请求
+     */
+    ResponseExtractor<Response> RESPONSE_CALLBACK = (r, resp, cb) -> resp;
+
+    /**
      * Extract data from the given {@code okhttp3.Response} and return it.
      * @param response the HTTP response
      * @return the extracted data

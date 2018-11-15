@@ -43,6 +43,24 @@ public interface HttpInterface {
     /**
      * 自定义请求
      * @param request
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T requestForResponse(Request request) throws TaskPartnerException;
+
+    /**
+     * 自定义请求
+     * @param request
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    <T> T requestForResponse(HttpConfig httpConfig, Request request) throws TaskPartnerException;
+
+    /**
+     * 自定义请求
+     * @param request
      * @param responseType
      * @param <T>
      * @return

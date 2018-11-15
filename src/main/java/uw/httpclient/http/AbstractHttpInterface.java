@@ -17,6 +17,31 @@ import java.util.Map;
  */
 public abstract class AbstractHttpInterface implements HttpInterface {
 
+    /**
+     * 自定义请求
+     * @param request
+     * @return
+     * @throws TaskPartnerException
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T requestForResponse(Request request) throws TaskPartnerException {
+        return (T)handleResponse(null, request, ResponseExtractor.RESPONSE_CALLBACK);
+    }
+
+    /**
+     * 自定义请求
+     * @param request
+     * @param <T>
+     * @return
+     * @throws TaskPartnerException
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T requestForResponse(HttpConfig httpConfig, Request request) throws TaskPartnerException {
+        return (T)handleResponse(httpConfig, request, ResponseExtractor.RESPONSE_CALLBACK);
+    }
+
 	/**
 	 * 自定义请求
 	 * 
