@@ -6,7 +6,7 @@
     <artifactId>uw-httpclient</artifactId>
     <version>0.6.5</version>
 
-    <name>interface-utils</name>
+    <name>uw-httpclient</name>
     <description>Http请求接口基础工具包</description>
 
 	<properties>
