@@ -2,6 +2,9 @@ package uw.httpclient.http.get;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Maps;
+import okhttp3.Request;
+import okhttp3.Response;
+import okio.BufferedSource;
 import org.junit.Test;
 import uw.httpclient.http.HttpInterface;
 import uw.httpclient.http.ResponseWrapper;
@@ -69,5 +72,14 @@ public class GetMethodTest {
         reqParams.put("rsv_idx",1);
         String resp = httpInterface.getForObject(StringUriTemplateUtil.expand("http://www.baidu.com/s", reqParams),String.class);
         System.out.println(resp);
+    }
+
+    @Test
+    public void testGetResponse() throws Exception {
+        Response response =
+                httpInterface.requestForResponse(new Request.Builder().url("http://www.baidu.com").build());
+        BufferedSource source = response.body().source();
+        okio.Buffer buffer = new okio.Buffer();
+        source.readAll(buffer);
     }
 }
